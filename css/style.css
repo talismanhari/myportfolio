@@ -42,7 +42,7 @@ body {
     z-index: 1;
 }
 
-/* Add these new styles for the portraits */
+/* Portrait container positioning */
 .portrait-container {
     position: absolute;
     top: 0;
@@ -55,42 +55,53 @@ body {
     align-items: center;
 }
 
+/* Adjust portrait to be centered and visible on both sides */
 .portrait {
-    width: 60%;
+    position: absolute;
+    width: 40%;
     height: 80%;
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-/* Update the image paths to use the asset folder */
+/* Make designer side of portrait visible on left */
 .designer-portrait {
-    background-image: url('../asset/');
-    opacity: 0.8;
+    background-image: url('../asset/desginer.jpg');
+    clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+    opacity: 0.9;
 }
 
+/* Make coder side of portrait visible on right */
 .coder-portrait {
-    background-image: url('../asset/');
-    opacity: 0.8;
+    background-image: url('../asset/coder.jpg');
+    clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+    opacity: 0.9;
 }
 
-/* Update the content z-index to appear above portraits */
+/* Content positioning */
 .content {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     padding: 40px;
-    width: 50%;
-    text-align: center;
+    width: 40%;
+    text-align: left;
     z-index: 2;
 }
 
+/* Position designer content on left side */
 .designer-side .content {
-    right: 0;
+    left: 5%;
+    text-align: left;
 }
 
+/* Position coder content on right side */
 .coder-side .content {
-    left: 0;
+    right: 5%;
+    text-align: right;
 }
 
 .role-title {
@@ -154,7 +165,7 @@ p {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../img/designer-bg.jpg') no-repeat center center;
+    background: url('../asset/designer-bg.jpg') no-repeat center center;
     background-size: cover;
     opacity: 0.3;
     z-index: -1;
@@ -168,7 +179,7 @@ p {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('../img/coder-bg.jpg') no-repeat center center;
+    background: url('../asset/coder-bg.jpg') no-repeat center center;
     background-size: cover;
     opacity: 0.1;
     z-index: -1;
