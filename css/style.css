@@ -1,0 +1,175 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.container {
+    height: 100vh;
+    position: relative;
+}
+
+.split-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.designer-side, .coder-side {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    transition: clip-path 0.7s ease;
+}
+
+.designer-side {
+    background: #f5f5f5;
+    clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+    z-index: 1;
+}
+
+.coder-side {
+    background: #ffffff;
+    clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+    z-index: 1;
+}
+
+/* Add these new styles for the portraits */
+.portrait-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.portrait {
+    width: 60%;
+    height: 80%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+/* Update the image paths to use the asset folder */
+.designer-portrait {
+    background-image: url('../asset/');
+    opacity: 0.8;
+}
+
+.coder-portrait {
+    background-image: url('../asset/');
+    opacity: 0.8;
+}
+
+/* Update the content z-index to appear above portraits */
+.content {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 40px;
+    width: 50%;
+    text-align: center;
+    z-index: 2;
+}
+
+.designer-side .content {
+    right: 0;
+}
+
+.coder-side .content {
+    left: 0;
+}
+
+.role-title {
+    font-size: 3.5rem;
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+}
+
+p {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 300px;
+    line-height: 1.5;
+    margin: 0 auto;
+}
+
+.code-snippet {
+    font-family: monospace;
+    color: #999;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.navigation {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+}
+
+.navigation ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+.navigation ul li {
+    margin: 0 20px;
+}
+
+.navigation ul li a {
+    color: #333;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s;
+}
+
+.navigation ul li a:hover {
+    color: #999;
+}
+
+/* Designer side styling */
+.designer-side::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../img/designer-bg.jpg') no-repeat center center;
+    background-size: cover;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+/* Coder side styling */
+.coder-side::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../img/coder-bg.jpg') no-repeat center center;
+    background-size: cover;
+    opacity: 0.1;
+    z-index: -1;
+}
