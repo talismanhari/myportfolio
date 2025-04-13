@@ -9,7 +9,55 @@ document.addEventListener('DOMContentLoaded', function() {
     designerSide.style.background = '#f8f8f8';
     coderSide.style.background = '#f8f8f8';
     
-    // Use RAF for smoother animation
+    // Enhanced header effects with scroll highlighting
+    const header = document.querySelector('.site-header');
+    const menuToggle = document.querySelector('.menu-toggle');
+    const mainNav = document.querySelector('.main-nav');
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.main-nav a');
+    
+    // Handle scroll events for header appearance and section highlighting
+    window.addEventListener('scroll', function() {
+        // Header transparency effect
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+        
+        // Highlight current section in navigation
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (scrollY >= (sectionTop - 200)) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').includes(current)) {
+                link.classList.add('active');
+            }
+        });
+    });
+    
+    // Smooth scroll to sections when clicking navigation links
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            window.scrollTo({
+                top: targetSection.offsetTop - 80,
+                behavior: 'smooth'
+            });
+        });
+    });
+    
+    // Use RAF for smoother animation (for the hero section split effect)
     let ticking = false;
     let lastX = 0.5;
     
@@ -33,27 +81,34 @@ document.addEventListener('DOMContentLoaded', function() {
         ticking = false;
     }
     
+    // Only apply the mouse move effect when in the hero section
     container.addEventListener('mousemove', function(e) {
-        lastX = e.clientX / window.innerWidth;
-        
-        if (!ticking) {
-            requestAnimationFrame(() => {
-                updateClipPaths(lastX);
-            });
-            ticking = true;
+        // Only apply effect if we're near the top of the page (hero section)
+        if (window.scrollY < window.innerHeight) {
+            lastX = e.clientX / window.innerWidth;
+            
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    updateClipPaths(lastX);
+                });
+                ticking = true;
+            }
         }
     });
     
     // Add touch support for mobile devices with improved performance
     container.addEventListener('touchmove', function(e) {
-        e.preventDefault();
-        lastX = e.touches[0].clientX / window.innerWidth;
-        
-        if (!ticking) {
-            requestAnimationFrame(() => {
-                updateClipPaths(lastX);
-            });
-            ticking = true;
+        // Only apply effect if we're near the top of the page (hero section)
+        if (window.scrollY < window.innerHeight) {
+            e.preventDefault();
+            lastX = e.touches[0].clientX / window.innerWidth;
+            
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    updateClipPaths(lastX);
+                });
+                ticking = true;
+            }
         }
     });
     
@@ -65,4 +120,23 @@ document.addEventListener('DOMContentLoaded', function() {
     coderSide.style.willChange = 'clip-path';
     if (designerPortrait) designerPortrait.style.willChange = 'clip-path';
     if (coderPortrait) coderPortrait.style.willChange = 'clip-path';
+    
+    // Add scroll reveal animations for sections
+    const revealElements = document.querySelectorAll('.reveal');
+    
+    function checkReveal() {
+        const windowHeight = window.innerHeight;
+        const revealPoint = 150;
+        
+        revealElements.forEach(element => {
+            const revealTop = element.getBoundingClientRect().top;
+            
+            if (revealTop < windowHeight - revealPoint) {
+                element.classList.add('revealed');
+            }
+        });
+    }
+    
+    window.addEventListener('scroll', checkReveal);
+    checkReveal(); // Check on initial load
 });
